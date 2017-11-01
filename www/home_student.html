@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+	<title>Ionic-AngularJS-Cordova</title>
+
+	<!-- Ionic framework - replace the CDN links with local files and build -->    
+	<link href="lib/ionicframework/ionic.min.css" rel="stylesheet">
+	<script src="lib/ionicframework/ionic.bundle.min.js"></script>
+	<script src="js/app.js"></script>
+	<script src="cordova.js"></script>
+	<script src="js/jquery-3.1.1.min.js"></script>
+	<link href="css/anim.css" rel="stylesheet"> 
+	
+	<style type="text/css">
+		.list input{
+			margin: 10px !important;
+		}
+		.wrapper{
+			width: 100%;
+			padding: 30px;
+		}
+		.title{
+			
+			width: 80%;
+			display: block;
+			margin: auto;
+		}
+		.title h4{
+			text-decoration: underline;
+			text-align: center;
+			font-family: Arial;
+			color: white;
+			font-weight: bold;
+		}
+
+		.box {height:300px;padding: 10px}
+
+		#search_result table 
+		{
+			width: 97%;
+			margin-right: 10px;
+			margin-left: 10px; 
+		}
+		#search_result table tr
+		{
+			
+
+		}
+		#search_result table tr td
+		{
+			border-bottom: 1px solid silver;
+			vertical-align: middle;
+			padding: 4px;
+			
+			
+		}
+		#search_result table tr td button{
+			width: 80px;
+			height: 30px;
+			font-family: Arial;
+			font-weight: bold;
+			border-radius: none !important;
+			float: right;
+			background-color:silver;
+		}
+		#search_result table tr td button:active{
+			float: right;
+			background-color:white;
+			color:black;
+			border: 1px solid silver;
+		}
+		 .home{
+            border: none;background-color: #556080;margin: 4px;
+            margin: 8px;
+        }
+        .buttons:active, .home:active{
+           background-color: #828ca8;
+
+        }
+
+		
+
+
+	</style>      
+</head>
+
+<body ng-controller="AppCtrl" style="background: #556080;">
+
+
+	<ion-side-menus  class="animated zoomIn" style="-webkit-animation-duration: 0.1s;">
+		<!-- Left menu -->
+		<ion-side-menu side="left">
+			<ion-list>
+                <ion-item href="calendar.html">
+					Calendar
+				</ion-item>
+                <ion-item href="view_appointment.html">
+					View Appointment
+				</ion-item>
+				<ion-item href="setting_student.html">
+					Manage Setting
+				</ion-item>
+					<ion-item href="logout.html">
+					Logout
+				</ion-item>
+			</ion-list>
+		</ion-side-menu>
+
+		<ion-side-menu-content>
+			<!-- Main content, usually <ion-nav-view> -->
+
+			<ion-header-bar align-title="left" class="bar-positive" style="background-color: #556080;padding:0px" >
+				<div class="buttons" >
+					<button class="home"  ng-click="toggleLeft()" ><img src="img/menu.png" ></button>
+				</div>
+				<h1 class="title"></h1>
+			</ion-header-bar>
+
+			<ion-content style="height:100vh">
+				<form id="kirim" onsubmit="return false;">
+					<div class="bg">
+					</div>
+
+					<div class="list">
+						<label class="item item-input" style="1px solid #dddddd;">
+							<input id="key" maxlength="50" id="search" type="text" placeholder="Searching for lecture" onkeyup="search()">
+						</label>
+						
+					</div>
+					<ion-list id="search_result">
+					
+					</ion-list>
+					
+					
+				</form>
+			</ion-content>
+		</ion-side-menu-content>
+
+		<!-- Right menu
+		<ion-side-menu side="right">
+		</ion-side-menu>
+		-->
+
+	</ion-side-menus>
+
+	<script type="text/javascript">
+			
+	
+		function detail(selected)
+		{
+			localStorage.setItem("selected", selected);
+			window.location="detail_lecture.html";
+		}
+
+		
+
+		$("#search_result").html();
+
+
+
+		search();
+
+		function search(){
+
+			$.ajax({
+			type: 'POST',    
+			url:'http://'+localStorage.getItem("domain")+'/sap/search.php',
+			data:'&key='+$('#key').val(),
+			success: function(content){
+			
+				$("#search_result").html(content);
+			}
+		});
+
+		}
+
+
+		$(".title").text("Welcome, "+localStorage.getItem("login"));
+	</script>
+
+</body>
+</html>

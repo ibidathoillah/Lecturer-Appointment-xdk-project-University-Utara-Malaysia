@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+	<title>Ionic-AngularJS-Cordova</title>
+
+	<!-- Ionic framework - replace the CDN links with local files and build -->    
+	<link href="lib/ionicframework/ionic.min.css" rel="stylesheet">
+	<script src="lib/ionicframework/ionic.bundle.min.js"></script>
+	<script src="js/app.js"></script>
+	<script src="cordova.js"></script>
+	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script> 
+	<script type="text/javascript" src="js/ckeditor.js"></script>
+	<link href="css/anim.css" rel="stylesheet">
+	<script type="text/javascript">
+		angular.module('ionicApp', ['ionic'])
+		.controller('AppCtrl',function($scope,$ionicSideMenuDelegate,$ionicPopup, $timeout) {
+			$scope.toggleLeft = function() {
+				$ionicSideMenuDelegate.toggleLeft();
+			};
+		});
+	</script>
+	<style type="text/css">
+		.list input{
+			margin: 10px !important;
+		}
+		.wrapper{
+			width: 100%;
+			padding: 30px;
+		}
+		.title{
+			
+			width: 80%;
+			display: block;
+			margin: auto;
+		}
+		.title h4{
+			text-decoration: underline;
+			text-align: center;
+			font-family: Arial;
+			color: white;
+			font-weight: bold;
+		}
+
+		.box {height:300px;padding: 10px}
+
+		#search_result table 
+		{
+			width: 97%;
+			margin-right: 10px;
+			margin-left: 10px; 
+		}
+		#search_result table tr
+		{
+			
+
+		}
+		#search_result table tr td
+		{
+			border-bottom: 1px solid silver;
+			vertical-align: middle;
+			padding: 4px;
+			
+			
+		}
+		#search_result table tr td button{
+			width: 80px;
+			height: 30px;
+			font-family: Arial;
+			font-weight: bold;
+			border-radius: none !important;
+			float: right;
+			background-color:silver;
+		}
+		#search_result table tr td button:active{
+			float: right;
+			background-color:white;
+			color:black;
+			border: 1px solid silver;
+		}
+		.home{
+			border: none;background-color: #556080;margin: 4px;
+			margin: 8px;
+		}
+		.buttons:active, .home:active{
+			background-color: #828ca8;
+
+		}
+		table{
+			width: 100%;
+		}
+		td{
+			padding:10px;
+		}
+		td.left{
+			width: 40%;
+			border-right:1px solid #dddddd;;
+
+		}
+
+		
+
+
+	</style>
+
+</head>
+
+<body id="contents" ng-controller="AppCtrl">
+	<ion-side-menus>
+
+		<ion-side-menu-content id="zoom" class="animated zoomIn" style="-webkit-animation-duration: 0.1s;">
+
+			<!-- Main content, usually <ion-nav-view> -->
+
+			<ion-header-bar align-title="left" class="bar-positive" style="background-color: #556080;padding: 0px" >
+				<div class="buttons" >
+					<button class="home" ng-click="toggleLeft()" ><a href="view_appointment.html"><img class="imghover" width="28px" height="28px" src="img/back.png" ></a></button>
+				</div>
+				<h1 class="title">Detail Appointment</h1>
+			</ion-header-bar>
+
+			<ion-content  style="height:100vh">
+
+				<div id="check"></div>
+				<br>
+				<label class="item item-input">
+					<img src="img/writer.png">
+					<table>
+						<tr>
+							<td class="left">
+								<span>Lecture Name</span>
+							</td>
+							<td>
+								<b><input id="name" disabled></b>
+							</td>
+						</tr>
+					</table>
+				</label>
+
+				<label class="item item-input">
+					<img src="img/chatting.png" style="width: 25px">
+					<span style="margin: 10px">Purpose</span>
+
+
+				</label>
+				<label>
+					<textarea style="display: block;width: 100%;padding: 10px " class="html" id="purpose">
+
+					</textarea>
+					
+				</label>
+				
+			</label>
+
+			<label class="item item-input">
+				<img src="img/location.png">
+				<table>
+					<tr>
+						<td class="left">
+							<span>Location</span>
+						</td>
+						<td>
+							<input type="text" id="location" placeholder="location">
+						</td>
+					</tr>
+				</table>
+			</label>
+
+			<label class="item item-input">
+				<img src="img/calendar.png">
+				<table>
+					<tr>
+						<td class="left">
+							<span>Date</span>
+						</td>
+						<td>
+							<input id="date" type="date">
+						</td>
+					</tr>
+				</table>
+			</label>
+
+
+
+			<label class="item item-input">
+				<img src="img/clock.png">
+				<table>
+					<tr>
+						<td class="left">
+							<span>Time</span>
+						</td>
+						<td>
+							<input type="number" id="hour" max="24" name="" placeholder="hh" style="display: initial;border: 1px solid #dddddd;width: 30%">:<input type="number" max="60" name="" placeholder="mm" id="minutes" style="display: initial;display: initial;border: 1px solid #dddddd;width: 30%">
+
+						</td>
+					</tr>
+				</table>
+			</label>
+
+			<label class="item item-input">
+				<img src="img/checked.png">
+				<table>
+					<tr>
+						<td class="left">
+							<span>Status</span>
+						</td>
+						<td>
+							<span id="accepted"></span>
+
+						</td>
+					</tr>
+				</table>
+			</label>
+
+			<br>
+			<br>
+			<button id="update" class="button button-balanced" style="width: 80%;margin: auto;display: block;border-radius: 0 !important;">RESEND</button>
+			<br>
+			<button id="delete" class="button button-assertive" style="width: 80%;margin: auto;display: block;border-radius: 0 !important;">DELETE</button>
+
+
+			<br><br><br><br><br><br><br>
+
+		</div>
+	</ion-content>
+</ion-side-menu-content>
+
+</ion-side-menus>
+<div id="info" style="display: none"></div>
+
+
+
+<script type="text/javascript">
+
+	CKEDITOR.replace( 'purpose' ); 
+
+	$.ajax({
+		type: 'POST',    
+		url:'http://'+localStorage.getItem("domain")+'/sap/detail_appointment.php',
+		data:'id='+localStorage.getItem('selected'),
+		success: function(information){
+			
+			$("#info").html(information);
+
+			setInformation("#id",info.id);
+			setInformation("#name",info.name);
+			setInformation("#id_student",info.id_student);
+			setInformation("#id_lecture",info.id_lecture);
+			setInformation("#purpose",info.purpose);
+			setInformation("#location",info.location);
+			setInformation("#date", info.date);
+			setInformation("#hour", info.hour);
+			setInformation("#minutes", info.minutes);
+
+			if(info.accepted==0)
+			{
+				$("#accepted").html("<span style='color:orange'>Pending</span>");
+			}
+			else if(info.accepted==2)
+			{
+				$("#accepted").html("<span style='color:red'>Declined</span>");
+			}
+			else if(info.accepted==1)
+			{
+				$("#accepted").html("<span style='color:green'>Approved</span>");
+			}
+			
+
+		}
+	});
+
+
+	$('#update').click(function() {
+
+		var message="";
+		if(CKEDITOR.instances.purpose.getData()=="")
+		{
+			message="purpose";
+		}
+		else if($('#location').val()=="")
+		{
+			message="location";
+		}
+		else if($('#date').val()=="")
+		{
+			message="location";
+		}
+
+
+		if(message=="")
+		{
+
+
+			$.ajax({
+				type: 'POST',    
+				url:'http://'+localStorage.getItem("domain")+'/sap/update_appointment.php',
+				data:'id='+localStorage.getItem('selected')+'&purpose='+encodeURIComponent(CKEDITOR.instances.purpose.getData())+'&location='+$('#location').val()+'&date='+$('#date').val()+'&hour='+$('#hour').val()+'&minutes='+$('#minutes').val(),
+				success: function(information){
+
+					alert("Appointment has sent");
+					window.location="detail_appointment.html";
+				}
+			});
+		}
+		else
+		{
+			alert("Please input "+message);
+		}
+	});
+
+	$('#delete').click(function() {
+
+			$.ajax({
+				type: 'POST',    
+				url:'http://'+localStorage.getItem("domain")+'/sap/delete_appointment.php',
+				data:'id='+localStorage.getItem('selected'),
+				success: function(information){
+
+					alert("Data has been deleted"+information);
+					window.location="view_appointment.html";
+				}
+			});
+
+	});
+
+
+
+	function setInformation(object,information){
+
+		$(object).val(information)
+	}
+
+</script>
+</body>
+</html>
